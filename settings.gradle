@@ -1,0 +1,2 @@
+rootProject.name='Andres WGU Scheduler'
+include ':app'

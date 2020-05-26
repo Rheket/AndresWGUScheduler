@@ -1,28 +1,43 @@
 package com.example.andreswguscheduler;
 
-import java.sql.Date;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "course_table")
 public class Course {
 
-    private String title;
-    private Date startDate;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    public Course(String title, Date startDate, Date anticipatedEndDate, String status) {
+    private String title;
+    private String startDate;
+    private String anticipatedEndDate;
+    private String status;
+
+    public Course(String title, String startDate, String anticipatedEndDate, String status) {
         this.title = title;
         this.startDate = startDate;
         this.anticipatedEndDate = anticipatedEndDate;
         this.status = status;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Date getAnticipatedEndDate() {
+    public String getAnticipatedEndDate() {
         return anticipatedEndDate;
     }
 
@@ -30,7 +45,5 @@ public class Course {
         return status;
     }
 
-    private Date anticipatedEndDate;
-    private String status;
 
 }
