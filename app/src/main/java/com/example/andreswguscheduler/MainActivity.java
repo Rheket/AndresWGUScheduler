@@ -1,14 +1,22 @@
 package com.example.andreswguscheduler;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Bundle;
+import com.example.andreswguscheduler.Entities.Course;
+import com.example.andreswguscheduler.Ui.CourseAdapter;
+import com.example.andreswguscheduler.ViewModel.CourseViewModel;
 
 import java.util.List;
+
+import static com.example.andreswguscheduler.Utilities.Constants.ADD_TERM_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,22 +27,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
+        Button buttonViewAllTerms = findViewById(R.id.view_all_terms);
 
-        final CourseAdapter adapter = new CourseAdapter();
-        recyclerView.setAdapter(adapter);
+        buttonViewAllTerms.setOnClickListener(new View.OnClickListener() {
 
-        courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
-        courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
             @Override
-            public void onChanged(List<Course> courses) {
-                //update RecyclerView
-                adapter.setCourses(courses);
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, TermListActivity.class);
+                startActivityForResult(intent, ADD_TERM_REQUEST);
 
             }
         });
 
+        final CourseAdapter adapter = new CourseAdapter();
+
+        courseViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CourseViewModel.class);
+        courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
+            @Override
+            public void onChanged(@Nullable List<Course> courses) {
+
+                //update recyclerview
+                adapter.setmCourses(courses);
+
+            }
+
+        });
+
     }
+
+
+
 }

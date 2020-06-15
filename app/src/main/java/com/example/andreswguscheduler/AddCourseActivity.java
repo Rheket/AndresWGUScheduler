@@ -1,5 +1,6 @@
 package com.example.andreswguscheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,12 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_COURSE_END_DATE;
+import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_COURSE_START_DATE;
+import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_PHONE_NUMBER;
+import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_COURSE_TITLE;
+
 public class AddCourseActivity extends AppCompatActivity {
 
     private EditText editCourseTitle;
     private EditText editMentorName;
     private EditText editMentorEmail;
     private EditText editMentorPhoneNumber;
+
 
 
     @Override
@@ -28,7 +35,8 @@ public class AddCourseActivity extends AppCompatActivity {
         editMentorEmail = findViewById(R.id.edit_text_mentor_email);
         editMentorPhoneNumber = findViewById(R.id.edit_text_mentor_phone_number);
 
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        setTitle("Add Course");
 
     }
 
@@ -46,13 +54,22 @@ public class AddCourseActivity extends AppCompatActivity {
             
         }
 
+        Intent data = new Intent();
+        data.putExtra(EXTRA_COURSE_TITLE, title);
+        data.putExtra(EXTRA_COURSE_START_DATE, mentorName);
+        data.putExtra(EXTRA_COURSE_END_DATE, mentorEmail);
+        data.putExtra(EXTRA_PHONE_NUMBER, mentorPhoneNumber);
+
+        setResult(RESULT_OK, data);
+        finish();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_course_menu, menu);
+        menuInflater.inflate(R.menu.add_menu, menu);
         return true;
 
     }
@@ -61,7 +78,7 @@ public class AddCourseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
 
-            case R.id.save_course:
+            case R.id.save_menu_button:
                 saveCourse();
                 return true;
 

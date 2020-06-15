@@ -18,13 +18,11 @@
         tools:layout_editor_absoluteX="16dp"
         android:importantForAutofill="no" />
 
-
-
     <EditText
         android:id="@+id/edit_text_mentor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mentor Name"
+        android:hint="Start Date"
         android:inputType="textMultiLine"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_title"
         tools:layout_editor_absoluteX="16dp" />
@@ -33,7 +31,7 @@
         android:id="@+id/edit_text_mentor_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mentor Email"/>
+        android:hint="Anticipated End Date"/>
 
     <EditText
         android:id="@+id/edit_text_mentor_phone_number"
