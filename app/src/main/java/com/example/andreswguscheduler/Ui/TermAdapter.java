@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.andreswguscheduler.Entities.Term;
@@ -19,23 +18,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
 
     private List<Term> mTerms = new ArrayList<>();
     private OnTermListener mOnTermListener;
-
-
-    private static final DiffUtil.ItemCallback<Term> DIFF_CALLBACK = new DiffUtil.ItemCallback<Term>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Term oldItem, @NonNull Term newItem) {
-
-            return oldItem.getId() == newItem.getId();
-
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Term oldItem, @NonNull Term newItem) {
-
-            return oldItem.getTermTitle().equals(newItem.getTermTitle()) && oldItem.getEndDate().equals(newItem.getEndDate());
-
-        }
-    };
 
     @NonNull
     @Override
@@ -67,10 +49,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
         this.mTerms = terms;
         notifyDataSetChanged();
 
-    }
-
-    public Term getTermAt(int position) {
-        return mTerms.get(position);
     }
 
     public class TermHolder extends RecyclerView.ViewHolder {

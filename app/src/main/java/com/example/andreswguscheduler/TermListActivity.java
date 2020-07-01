@@ -1,5 +1,10 @@
 package com.example.andreswguscheduler;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -7,30 +12,27 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
 import com.example.andreswguscheduler.Entities.Term;
 import com.example.andreswguscheduler.Ui.TermAdapter;
+import com.example.andreswguscheduler.ViewModel.CourseViewModel;
 import com.example.andreswguscheduler.ViewModel.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 import static com.example.andreswguscheduler.Utilities.Constants.ADD_TERM_REQUEST;
-import static com.example.andreswguscheduler.Utilities.Constants.EDIT_TERM_REQUEST;
-import static com.example.andreswguscheduler.Utilities.Constants.VIEW_TERM_REQUEST;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_END_DATE;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_ID;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_START_DATE;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_TITLE;
+import static com.example.andreswguscheduler.Utilities.Constants.VIEW_TERM_REQUEST;
 
 public class TermListActivity extends AppCompatActivity  {
 
     private TermViewModel termViewModel;
+    private CourseViewModel courseViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class TermListActivity extends AppCompatActivity  {
         final TermAdapter adapter = new TermAdapter();
         recyclerView.setAdapter(adapter);
 
+        courseViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CourseViewModel.class);
 
         termViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(TermViewModel.class);
         termViewModel.getAllTerms().observe(this, new Observer<List<Term>>() {
@@ -86,6 +89,7 @@ public class TermListActivity extends AppCompatActivity  {
         });
 
 
+
     }
 
     @Override
@@ -105,9 +109,10 @@ public class TermListActivity extends AppCompatActivity  {
             Toast.makeText(this, "Term saved", Toast.LENGTH_SHORT).show();
 
         } else {
-
-            Toast.makeText(this, "Term not saved", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+
 
     }
 

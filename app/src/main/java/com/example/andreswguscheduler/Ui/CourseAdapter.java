@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.andreswguscheduler.Entities.Course;
@@ -19,24 +18,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
     private List<Course> mCourses = new ArrayList<>();
     private OnCourseListener mOnCourseListener;
-
-    //public CourseAdapter() {super(DIFF_CALLBACK);}
-
-    private static final DiffUtil.ItemCallback<Course> DIFF_CALLBACK = new DiffUtil.ItemCallback<Course>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Course oldItem, @NonNull Course newItem) {
-
-            return oldItem.getCourseId() == newItem.getCourseId();
-
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Course oldItem, @NonNull Course newItem) {
-
-            return oldItem.getCourseTitle().equals(newItem.getCourseTitle()) && oldItem.getCourseAnticipatedEndDate().equals(newItem.getCourseAnticipatedEndDate()) && oldItem.getCourseStatus().equals(newItem.getCourseStatus());
-
-        }
-    };
 
     @NonNull
     @Override
@@ -51,6 +32,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
     public void onBindViewHolder(@NonNull CourseHolder holder, int position) {
 
         Course currentCourse = mCourses.get(position);
+
         holder.textViewTitle.setText(currentCourse.getCourseTitle());
         holder.textViewStartDate.setText(currentCourse.getCourseStartDate());
         holder.textViewAnticipatedEndDate.setText(currentCourse.getCourseAnticipatedEndDate());
@@ -63,9 +45,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         return mCourses.size();
     }
 
-    public void setmCourses(List<Course> mCourses) {
+    public void setmCourses(List<Course> courses) {
 
-        this.mCourses = mCourses;
+        this.mCourses = courses;
         notifyDataSetChanged();
 
     }

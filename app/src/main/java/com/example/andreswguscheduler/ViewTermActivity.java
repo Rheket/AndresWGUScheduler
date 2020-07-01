@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.andreswguscheduler.Entities.Term;
+import com.example.andreswguscheduler.ViewModel.CourseViewModel;
 import com.example.andreswguscheduler.ViewModel.TermViewModel;
 
 import static com.example.andreswguscheduler.Utilities.Constants.ADD_COURSE_REQUEST;
@@ -32,6 +34,10 @@ public class ViewTermActivity extends AppCompatActivity {
     private TextView termEnd;
 
     private TermViewModel termViewModel;
+    private CourseViewModel courseViewModel;
+    private static int count;
+
+    private Term term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +45,16 @@ public class ViewTermActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_term);
 
         termViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(TermViewModel.class);
+        courseViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CourseViewModel.class);
 
         termTitle = findViewById(R.id.add_text_term_title);
         termStart = findViewById(R.id.edit_text_start);
         termEnd = findViewById(R.id.edit_text_end);
 
         Intent intent = getIntent();
+
+        term = (Term)intent.getSerializableExtra(EXTRA_TERM);
+
 
         termTitle.setText(intent.getStringExtra(EXTRA_TERM_TITLE));
         termStart.setText(intent.getStringExtra(EXTRA_TERM_START_DATE));
@@ -57,12 +67,24 @@ public class ViewTermActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                int tId = term.getId();
+
+                courseViewModel.setTermId(tId);
+
                 Intent i = new Intent(ViewTermActivity.this, CourseListActivity.class);
+
                 startActivityForResult(i, ADD_COURSE_REQUEST);
 
             }
         });
 
+
+        courseViewModel.getCount(term.getId()).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                count = integer;
+            }
+        });
 
     }
 
@@ -70,7 +92,7 @@ public class ViewTermActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.edit_del_menu, menu);
+        menuInflater.inflate(R.menu.term_menu, menu);
         return true;
 
     }
@@ -87,11 +109,18 @@ public class ViewTermActivity extends AppCompatActivity {
 
             case R.id.action_delete:
 
-                termViewModel.deleteTerm(term);
-                Toast.makeText(this, "Term Deleted", Toast.LENGTH_SHORT).show();
-                startActivity(delIntent);
+                if(count == 0) {
+
+                    termViewModel.deleteTerm(term);
+                    Toast.makeText(this, "Term Deleted", Toast.LENGTH_SHORT).show();
+                    startActivity(delIntent);
+
+                } else {
+                    Toast.makeText(this, "Can't delete terms with courses assigned", Toast.LENGTH_SHORT).show();
+                }
 
                 return true;
+
 
             case R.id.action_edit:
 
@@ -117,4 +146,6 @@ public class ViewTermActivity extends AppCompatActivity {
 
 
     }
+
+
 }

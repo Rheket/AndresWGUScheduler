@@ -1,44 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:showDividers="middle"
+    android:divider="@drawable/divider8dp"
     android:padding="16dp"
     tools:context=".AddCourseActivity">
 
-    <EditText
-        android:id="@+id/edit_text_course_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Course Title"
-        android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp"
-        android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/edit_text_course_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course Title"
+            android:inputType="text"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp"
+            android:importantForAutofill="no" />
 
-    <EditText
-        android:id="@+id/edit_text_mentor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Start Date"
-        android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_title"
-        tools:layout_editor_absoluteX="16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date:"
+            android:textSize="30dp"/>
 
-    <EditText
-        android:id="@+id/edit_text_mentor_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Anticipated End Date"/>
+        <DatePicker
+            android:id="@+id/date_picker_course_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/edit_text_mentor_phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phone Number"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anticipated End Date:"
+            android:textSize="30dp"/>
+
+        <DatePicker
+            android:id="@+id/date_picker_course_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_course_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/rb_plan_to_take"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plan To Take"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/rb_in_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="In Progress"/>
+
+            <RadioButton
+                android:id="@+id/rb_completed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Completed"/>
+            <RadioButton
+                android:id="@+id/rb_dropped"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dropped"/>
+
+        </RadioGroup>
 
 
+        <EditText
+            android:id="@+id/edit_text_course_mentor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Name" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/edit_text_course_mentor_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Email" />
+
+        <EditText
+            android:id="@+id/edit_text_course_mentor_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Phone Number" />
+
+
+    </LinearLayout>
+</ScrollView>

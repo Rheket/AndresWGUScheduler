@@ -5,22 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.andreswguscheduler.Entities.Course;
-import com.example.andreswguscheduler.Ui.CourseAdapter;
-import com.example.andreswguscheduler.ViewModel.CourseViewModel;
-
-import java.util.List;
 
 import static com.example.andreswguscheduler.Utilities.Constants.ADD_TERM_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CourseViewModel courseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +30,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final CourseAdapter adapter = new CourseAdapter();
 
-        courseViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(CourseViewModel.class);
-        courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
-            @Override
-            public void onChanged(@Nullable List<Course> courses) {
-
-                //update recyclerview
-                adapter.setmCourses(courses);
-
-            }
-
-        });
 
     }
 

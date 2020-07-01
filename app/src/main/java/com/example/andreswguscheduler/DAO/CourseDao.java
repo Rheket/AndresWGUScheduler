@@ -23,7 +23,13 @@ public interface CourseDao {
     @Delete
     void delete(Course course);
 
-    @Query("SELECT * FROM course_table ORDER BY courseStartDate DESC")
-    LiveData<List<Course>> getAllCourses();
+    @Query("SELECT COUNT(courseId) FROM course_table WHERE termId = :tId")
+    LiveData<Integer> getCount(int tId);
+
+    @Query("SELECT * FROM course_table WHERE termId = :termId ORDER BY courseStartDate ASC")
+    LiveData<List<Course>> getAllCourses(int termId);
+
+    @Query("UPDATE course_table SET courseNotes = :cNotes WHERE courseId = :cId")
+    void updateNotes(String cNotes, int cId);
 
 }

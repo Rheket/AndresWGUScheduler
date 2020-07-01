@@ -1,10 +1,5 @@
 package com.example.andreswguscheduler;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +10,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.andreswguscheduler.Entities.Term;
 import com.example.andreswguscheduler.ViewModel.TermViewModel;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.andreswguscheduler.Utilities.Constants.EDIT_TERM_REQUEST;
-import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_END_DATE;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_ID;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_START_DATE;
@@ -31,9 +32,7 @@ public class EditTermActivity extends AppCompatActivity {
 
     private EditText termTitle;
     private DatePicker datePickerStart;
-    private TextView termStart;
     private DatePicker datePickerEnd;
-    private TextView termEnd;
 
     private TermViewModel termViewModel;
 
@@ -46,17 +45,41 @@ public class EditTermActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         termTitle = findViewById(R.id.edit_text_term_title);
-        termStart = findViewById(R.id.text_view_term_start);
-        termEnd = findViewById(R.id.text_view_term_end);
         datePickerStart = findViewById(R.id.date_picker_edit_term_start);
         datePickerEnd = findViewById(R.id.date_picker_edit_term_end);
 
         termTitle.setText(intent.getStringExtra(EXTRA_TERM_TITLE));
-        termStart.setText(intent.getStringExtra(EXTRA_TERM_START_DATE));
-        termEnd.setText(intent.getStringExtra(EXTRA_TERM_END_DATE));
+
+        SimpleDateFormat sdf  = new SimpleDateFormat("MM/dd/yyyy");
+
+        String editStartDate = intent.getStringExtra(EXTRA_TERM_START_DATE);
+        String editEndDate = intent.getStringExtra(EXTRA_TERM_END_DATE);
+
+        try {
+            Date dateStart = sdf.parse(editStartDate);
+            final Calendar calStart = Calendar.getInstance();
+            calStart.setTime(dateStart);
+
+            int sYear = calStart.get(Calendar.YEAR);
+            int sMonth = calStart.get(Calendar.MONTH);
+            int sDay = calStart.get(Calendar.DAY_OF_MONTH);
+            datePickerStart.updateDate(sYear, sMonth, sDay);
+
+
+            Date dateEnd = sdf.parse(editEndDate);
+            final Calendar calEnd = Calendar.getInstance();
+            calEnd.setTime(dateEnd);
+
+            int eYear = calEnd.get(Calendar.YEAR);
+            int eMonth = calEnd.get(Calendar.MONTH);
+            int eDay = calEnd.get(Calendar.DAY_OF_MONTH);
+            datePickerEnd.updateDate(eYear, eMonth, eDay);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         termViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(TermViewModel.class);
-
 
         setTitle("Editing Term");
 
@@ -65,8 +88,23 @@ public class EditTermActivity extends AppCompatActivity {
     private void saveEdit() {
 
         String editTitle = termTitle.getText().toString();
-        String editStart = datePickerStart.getMonth() + "/" + datePickerStart.getDayOfMonth() + "/" + datePickerStart.getYear();
-        String editEnd = datePickerEnd.getMonth() + "/" + datePickerEnd.getDayOfMonth() + "/" + datePickerEnd.getYear();
+
+        SimpleDateFormat converter = new SimpleDateFormat("MM/dd/yyyy");
+
+        int sDay = datePickerStart.getDayOfMonth();
+        int sMonth = datePickerStart.getMonth();
+        int sYear = datePickerStart.getYear();
+        Calendar calStart = Calendar.getInstance();
+        calStart.set(sYear, sMonth, sDay);
+        String formattedStart = converter.format(calStart.getTime());
+
+        int eDay = datePickerEnd.getDayOfMonth();
+        int eMonth = datePickerEnd.getMonth();
+        int eYear = datePickerEnd.getYear();
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(eYear, eMonth, eDay);
+        String formattedEnd = converter.format(calEnd.getTime());
+
 
         if (editTitle.trim().isEmpty()) {
 
@@ -78,8 +116,8 @@ public class EditTermActivity extends AppCompatActivity {
         Intent data = new Intent(EditTermActivity.this, TermListActivity.class);
 
         data.putExtra(EXTRA_TERM_TITLE, editTitle);
-        data.putExtra(EXTRA_TERM_START_DATE, editStart);
-        data.putExtra(EXTRA_TERM_END_DATE, editEnd);
+        data.putExtra(EXTRA_TERM_START_DATE, formattedStart);
+        data.putExtra(EXTRA_TERM_END_DATE, formattedEnd);
 
         int id = getIntent().getIntExtra(EXTRA_TERM_ID, -1);
 
@@ -89,7 +127,7 @@ public class EditTermActivity extends AppCompatActivity {
 
         setResult(RESULT_OK, data);
 
-        Term term = new Term(editTitle, editStart, editEnd);
+        Term term = new Term(editTitle, formattedStart, formattedEnd);
         term.setId(id);
 
         termViewModel.updateTerm(term);

@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:showDividers="middle"
+    android:divider="@drawable/divider8dp"
     tools:context=".ViewCourseActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/text_view_course_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Title"
+        android:inputType="text"/>
+
+    <TextView
+        android:id="@+id/text_view_course_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Start" />
+
+    <TextView
+        android:id="@+id/text_view_course_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course End" />
+
+    <TextView
+        android:id="@+id/text_view_course_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Status" />
+
+    <TextView
+        android:id="@+id/text_view_course_mentor_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Mentor" />
+
+    <TextView
+        android:id="@+id/text_view_course_mentor_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Mentor Email" />
+
+    <TextView
+        android:id="@+id/text_view_course_mentor_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Mentor Phone Number" />
+
+    <Button
+        android:id="@+id/button_view_notes"
+        android:text="Notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/button_view_assessments_list"
+        android:text="Assessments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

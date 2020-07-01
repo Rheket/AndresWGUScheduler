@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditCourseActivity"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/divider8dp">
+
+        <EditText
+            android:id="@+id/edit_course_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course Title"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/edit_course_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:textSize="30dp"/>
+
+        <DatePicker
+            android:id="@+id/edit_date_picker_course_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/edit_course_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:textSize="30dp"/>
+
+        <DatePicker
+            android:id="@+id/edit_date_picker_course_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RadioGroup
+            android:id="@+id/edit_radio_group_course_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/edit_rb_plan_to_take"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plan To Take" />
+
+            <RadioButton
+                android:id="@+id/edit_rb_in_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="In Progress"/>
+
+            <RadioButton
+                android:id="@+id/edit_rb_completed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Completed"/>
+            <RadioButton
+                android:id="@+id/edit_rb_dropped"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dropped"/>
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/edit_mentor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Name" />
+
+        <EditText
+            android:id="@+id/edit_mentor_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Email" />
+
+        <EditText
+            android:id="@+id/edit_mentor_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mentor Phone number" />
+
+    </LinearLayout>
+
+</ScrollView>

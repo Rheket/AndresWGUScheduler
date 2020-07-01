@@ -1,18 +1,23 @@
 package com.example.andreswguscheduler.Entities;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "course_table")
-public class Course {
+import java.io.Serializable;
+
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "course_table", foreignKeys = {
+        @ForeignKey(onDelete = CASCADE, entity = Term.class,
+                parentColumns = "id", childColumns = "termId")},
+        indices = {@Index("termId")})
+public class Course implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int courseId;
 
-    @ForeignKey(entity = Term.class, parentColumns = "id", childColumns = "courseId")
-    @ColumnInfo(name = "termId")
     private int termId;
 
     private String courseTitle;
@@ -24,7 +29,9 @@ public class Course {
     private String courseMentorPhoneNumber;
     private String courseNotes;
 
-    public Course(String courseTitle, String courseStartDate, String courseAnticipatedEndDate, String courseStatus, String courseMentorName, String courseMentorEmail, String courseMentorPhoneNumber, String courseNotes) {
+    public Course(int termId, String courseTitle, String courseStartDate, String courseAnticipatedEndDate, String courseStatus, String courseMentorName, String courseMentorEmail, String courseMentorPhoneNumber) {
+
+        this.termId = termId;
         this.courseTitle = courseTitle;
         this.courseStartDate = courseStartDate;
         this.courseAnticipatedEndDate = courseAnticipatedEndDate;
@@ -32,15 +39,15 @@ public class Course {
         this.courseMentorName = courseMentorName;
         this.courseMentorEmail = courseMentorEmail;
         this.courseMentorPhoneNumber = courseMentorPhoneNumber;
+
+    }
+
+    public void setCourseNotes(String courseNotes) {
         this.courseNotes = courseNotes;
     }
 
     public void setCourseId(int courseId) {
         this.courseId = courseId;
-    }
-
-    public void setTermId(int termId) {
-        this.termId = termId;
     }
 
     public int getTermId() {

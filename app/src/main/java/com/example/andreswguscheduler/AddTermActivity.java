@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_END_DATE;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_START_DATE;
 import static com.example.andreswguscheduler.Utilities.Constants.EXTRA_TERM_TITLE;
@@ -21,7 +24,6 @@ public class AddTermActivity extends AppCompatActivity {
     private EditText editTermTitle;
     private DatePicker editTermStartDate;
     private DatePicker editTermEndDate;
-    private EditText editTermStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,24 @@ public class AddTermActivity extends AppCompatActivity {
     private void saveTerm() {
 
         String termTitle = editTermTitle.getText().toString();
-        String termStartDate = editTermStartDate.getMonth() + "/" + editTermStartDate.getDayOfMonth() + "/" + editTermStartDate.getYear();
-        String termEndDate = editTermEndDate.getMonth() + "/" + editTermEndDate.getDayOfMonth() + "/" + editTermEndDate.getYear();
 
-        if (termTitle.trim().isEmpty() || termStartDate.trim().isEmpty() || termEndDate.trim().isEmpty()) {
+        SimpleDateFormat converter = new SimpleDateFormat("MM/dd/yyyy");
+
+        int sDay = editTermStartDate.getDayOfMonth();
+        int sMonth = editTermStartDate.getMonth();
+        int sYear = editTermStartDate.getYear();
+        Calendar calStart = Calendar.getInstance();
+        calStart.set(sYear, sMonth, sDay);
+        String formattedStart = converter.format(calStart.getTime());
+
+        int eDay = editTermEndDate.getDayOfMonth();
+        int eMonth = editTermEndDate.getMonth();
+        int eYear = editTermEndDate.getYear();
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(eYear, eMonth, eDay);
+        String formattedEnd = converter.format(calEnd.getTime());
+
+        if (termTitle.trim().isEmpty()) {
 
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             return;
@@ -52,8 +68,8 @@ public class AddTermActivity extends AppCompatActivity {
         Intent data = new Intent();
 
         data.putExtra(EXTRA_TERM_TITLE, termTitle);
-        data.putExtra(EXTRA_TERM_START_DATE, termStartDate);
-        data.putExtra(EXTRA_TERM_END_DATE, termEndDate);
+        data.putExtra(EXTRA_TERM_START_DATE, formattedStart);
+        data.putExtra(EXTRA_TERM_END_DATE, formattedEnd);
 
         setResult(RESULT_OK, data);
         finish();
